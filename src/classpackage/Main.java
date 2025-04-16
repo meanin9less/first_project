@@ -7,6 +7,71 @@ public class Main {
     static User currentUser;
     static Scanner s = new Scanner(System.in);
 
+    public static void intro(){
+        while (true){
+            System.out.println("1. 로그인");
+            System.out.println("2. 종료");
+            int onOff = s.nextInt();
+            if(onOff!=1){
+                if(onOff==2){
+                    System.out.println("종료되었습니다.");
+                    break;
+                }else {
+                    System.out.println("잘못 입력 하였습니다.");
+                    continue;
+                }
+            }
+            User currentUser = login();
+            if(currentUser==null){
+                continue;
+            }
+            start(currentUser);
+        }
+    }
+
+    public static void start(User currentUser){
+        while (true){
+            boolean logout = false;
+
+            printMenu();
+
+            int selectedMenu = s.nextInt();
+            switch (selectedMenu){
+                case 1:
+                    System.out.print("찾을 이름 : ");
+                    String inputName = s.next();
+                    searchContact(inputName);
+                    break;
+                case 2:
+                    searchAllContact();
+                    break;
+                case 3:
+                    System.out.println("PW : ");
+                    String inputPw = s.next();
+                    if(!currentUser.getPw().trim().equals(inputPw.trim())){
+                        System.out.println("비밀번호를 잘 못 입력하였습니다.");
+                        break;
+                    }
+                    System.out.println("전화번호 : ");
+                    String inputContact = s.next();
+                    System.out.println("주소 : ");
+                    String inputAddress = s.next();
+                    updateUserInfo(currentUser.getId(), inputContact, inputAddress);
+                    break;
+                case 4:
+                    System.out.println("로그아웃");
+                    logout = true;
+                    break;
+                default:
+                    System.out.println("잘 못 입력하였습니다.");
+                    break;
+            }
+            if(logout){
+                break;
+            }
+        }
+    }
+
     public static User login(){
         System.out.print("ID : ");
         String inputId = s.next();
@@ -79,69 +144,12 @@ public class Main {
     }
 
 
+
+
     public static void main(String[] args) {
         users[0] = new User("aaa", "111", "김준홍1", "슬럼1", "1111");
         users[1] = new User("bbb", "222", "김준홍2", "슬럼2", "2222");
         users[2] = new User("ccc", "333", "김준홍3", "슬럼3", "3333");
-
-        while (true){
-            System.out.println("1. 로그인");
-            System.out.println("2. 종료");
-            int onOff = s.nextInt();
-            if(onOff!=1){
-                if(onOff==2){
-                    System.out.println("종료되었습니다.");
-                    break;
-                }else {
-                    System.out.println("잘못 입력 하였습니다.");
-                    continue;
-                }
-            }
-            User currentUser = login();
-            if(currentUser==null){
-                continue;
-            }
-
-            while (true){
-                boolean logout = false;
-
-                printMenu();
-
-                int selectedMenu = s.nextInt();
-                switch (selectedMenu){
-                    case 1:
-                        System.out.print("찾을 이름 : ");
-                        String inputName = s.next();
-                        searchContact(inputName);
-                        break;
-                    case 2:
-                        searchAllContact();
-                        break;
-                    case 3:
-                        System.out.println("PW : ");
-                        String inputPw = s.next();
-                        if(!currentUser.getPw().trim().equals(inputPw.trim())){
-                            System.out.println("비밀번호를 잘 못 입력하였습니다.");
-                            break;
-                        }
-                        System.out.println("전화번호 : ");
-                        String inputContact = s.next();
-                        System.out.println("주소 : ");
-                        String inputAddress = s.next();
-                        updateUserInfo(currentUser.getId(), inputContact, inputAddress);
-                        break;
-                    case 4:
-                        System.out.println("로그아웃");
-                        logout = true;
-                        break;
-                    default:
-                        System.out.println("잘 못 입력하였습니다.");
-                        break;
-                }
-                if(logout){
-                    break;
-                }
-            }
-        }
+        intro();
     }
 }
