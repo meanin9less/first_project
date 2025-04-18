@@ -38,6 +38,4 @@ public class User {
     public void setContact(String inputContact){
         this.contact = inputContact;
     }
-
-
 }

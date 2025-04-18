@@ -29,6 +29,36 @@ public class Main {
         }
     }
 
+    public static User login(){
+        System.out.print("ID : ");
+        String inputId = s.next();
+        boolean isCollectId = false;
+        boolean isCollectPw = false;
+        for (int i = 0; i<users.length; i++){
+            if(users[i].getId().equals(inputId)){
+                isCollectId =true;
+                System.out.print("PW : ");
+                String inputPw = s.next();
+                if(users[i].getPw().equals(inputPw)){
+                    isCollectPw = true;
+                    currentUser = users[i];
+                    break;
+                }
+                break;
+            }
+        }
+        if(!isCollectId){
+            System.out.println("아이디를 잘못입력하였습니다.");
+            return null;
+        }
+        if(!isCollectPw){
+            System.out.println("비밀번호를 잘못입력하였습니다.");
+            return null;
+        }
+        System.out.println("로그인 성공");
+        return currentUser;
+    }
+
     public static void start(User currentUser){
         while (true){
             boolean logout = false;
@@ -72,36 +102,6 @@ public class Main {
         }
     }
 
-    public static User login(){
-        System.out.print("ID : ");
-        String inputId = s.next();
-        boolean isCollectId = false;
-        boolean isCollectPw = false;
-        for (int i = 0; i<users.length; i++){
-            if(users[i].getId().equals(inputId)){
-                isCollectId =true;
-                System.out.print("PW : ");
-                String inputPw = s.next();
-                if(users[i].getPw().equals(inputPw)){
-                    isCollectPw = true;
-                    currentUser = users[i];
-                    break;
-                }
-                break;
-            }
-        }
-        if(!isCollectId){
-            System.out.println("아이디를 잘못입력하였습니다.");
-            return currentUser;
-        }
-        if(!isCollectPw){
-            System.out.println("비밀번호를 잘못입력하였습니다.");
-            return currentUser;
-        }
-        System.out.println("로그인 성공");
-        return currentUser;
-    }
-
     public static void printMenu(){
         System.out.println("<< 주소록 관리 >>");
         System.out.println("1. 주소록 검색");
@@ -142,9 +142,6 @@ public class Main {
             }
         }
     }
-
-
-
 
     public static void main(String[] args) {
         users[0] = new User("aaa", "111", "김준홍1", "슬럼1", "1111");
